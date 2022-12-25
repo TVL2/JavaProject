@@ -15,3 +15,6 @@
 
 
 ### Задание 2
+
+- Реализовать метод update в классе ArrayStorage.
+- в классе ArrayStorage для методов update, save, delete реализовать проверку наличия резюме в  массиве storage.
