@@ -1,4 +1,4 @@
-import java.util.Arrays;
+
 
 /**
  * Array based storage for Resumes
@@ -8,72 +8,64 @@ public class ArrayStorage {
     private Resume[] storage = new Resume[5];
     private int size = 0;
 
-    private boolean resumeAvailabilityCheck(Object o){
-            if (o.getClass().isInstance(String.class)) {
-                for ( Resume r: storage) {
-                    if (r.uuid.equals(o)) return true;
-                }
-            }
-            if (o.getClass().isInstance(Resume.class)) {
-                return Arrays.asList(this.storage).contains((Resume) o);
-            }
-            return false;
+    private int resumeAvailabilityCheck(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].toString().equals(uuid)) return i;
+        }
+        return -1;
     }
 
     void clear() {
-        storage = new Resume[5];
+        for (int i = 0; i < size; i++) {
+            storage[i] = null;
+        }
         size = 0;
     }
 
     void update(Resume r) {
-        //TODO check if resume present
-        if (resumeAvailabilityCheck(r)) {
-            for (int i = 0; i < size(); i++) {
-                if (storage[i] == r) {
-                    storage[i].uuid = r.uuid;
-                    break;
-                }
-            }
+        int index = resumeAvailabilityCheck(r.toString());
+        if(index == -1){
+            System.out.println("Resume not found");
         }
-        else System.out.println("Resume not found");
+        else{
+            storage[index] = r;
+        }
     }
 
     void save(Resume r) {
-        //TODO check if resume not present
-        if (!resumeAvailabilityCheck(r)) {
-            for (int i = 0; i < storage.length; i++) {
-                if (storage[i] == null) {
-                    storage[i] = r;
-                    size++;
-                    break;
-                }
+        int index = resumeAvailabilityCheck(r.toString());
+        if(index != -1){
+            System.out.println("Resume " + r.toString() + " already exist!");
             }
+        else if (storage.length == size()) {
+            System.out.println("Resume storage is full!!!");
+        }
+        else{
+            storage[size] = r;
+            size++;
         }
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < this.size(); i++) {
-            if (storage[i].toString().equals(uuid)) {
-                return storage[i];
-            }
+        int index = resumeAvailabilityCheck(uuid);
+        if(index == -1){
+            System.out.println("Resume not found");
+            return  null;
         }
-        return null;
+        return storage[index];
     }
 
     void delete(String uuid) {
-        //TODO check if resume present
-        if (resumeAvailabilityCheck(uuid)) {
-            for (int i = 0; i < this.size(); i++) {
-                if (storage[i].toString().equals(uuid)) {
-                    storage[i] = null;
-                    if (this.size() - 1 - i >= 0) System.arraycopy(storage, i + 1, storage, i, this.size() - 1 - i);
-                    storage[this.size() - 1] = null;
-                    size--;
-                    break;
-                }
-            }
+        int index = resumeAvailabilityCheck(uuid);
+        if (index == -1) {
+            System.out.println("Resume not found");
         }
-        else System.out.println("Resume not found");
+        else {
+            storage[index] = null;
+            if (this.size() - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, this.size() - 1 - index);
+            storage[this.size() - 1] = null;
+            size--;
+        }
     }
 
     /**
