@@ -5,7 +5,8 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
 
-    private Resume[] storage = new Resume[5];
+    public static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     private int resumeAvailabilityCheck(String uuid) {
