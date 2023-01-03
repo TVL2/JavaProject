@@ -18,3 +18,7 @@
 
 - Реализовать метод update в классе ArrayStorage.
 - в классе ArrayStorage для методов update, save, delete реализовать проверку наличия резюме в  массиве storage.
+
+
+### Задание 3
+- добавить методы equals,hashcode, setUuid в класс Resume
