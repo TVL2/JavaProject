@@ -17,20 +17,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
 
-    public void save(Resume r) {
-        int index = resumeAvailabilityCheck(r.toString());
-        if(index >= 0 ){
-            System.out.println("Resume " + r.toString() + " already exist!");
-            }
-        else if (storage.length == size()) {
-            System.out.println("Resume storage is full!!!");
-        }
-        else{
-            saveElement(r, index);
-            size++;
-        }
-    }
-
     protected void saveElement(Resume r, int index){
         index = Math.abs(index + 1);
         if(size() - index - 1 >= 0) System.arraycopy(storage, index, storage, index + 1, size() - index);
