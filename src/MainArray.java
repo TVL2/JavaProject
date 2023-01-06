@@ -1,9 +1,12 @@
+import JavaProject.model.Resume;
+import JavaProject.storage.ArrayStorage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for JavaProject.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {

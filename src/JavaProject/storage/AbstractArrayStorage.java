@@ -1,30 +1,28 @@
+package JavaProject.storage;
+
+import JavaProject.model.Resume;
+
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public abstract class AbstractArrayStorage implements Storage {
 
-    public static final int STORAGE_LIMIT = 10000;
-    private Resume[] storage = new Resume[STORAGE_LIMIT];
-    private int size = 0;
+    protected static final int STORAGE_LIMIT = 10000;
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected int size = 0;
 
-    private int resumeAvailabilityCheck(String uuid) {
+    protected abstract int resumeAvailabilityCheck(String uuid);
 
-        for (int i = 0; i < size; i++) {
-            if (storage[i].toString().equals(uuid)) return i;
-        }
-        return -1;
-    }
-
-    void clear() {
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    void update(Resume r) {
+    public void update(Resume r) {
         int index = resumeAvailabilityCheck(r.toString());
-        if(index == -1){
+        if(index < 0){
             System.out.println("Resume not found");
         }
         else{
@@ -32,32 +30,34 @@ public class ArrayStorage {
         }
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         int index = resumeAvailabilityCheck(r.toString());
-        if(index != -1){
+        if(index >= 0){
             System.out.println("Resume " + r.toString() + " already exist!");
             }
         else if (storage.length == size()) {
             System.out.println("Resume storage is full!!!");
         }
         else{
-            storage[size] = r;
+            saveElement(r, index);
             size++;
         }
     }
 
-    Resume get(String uuid) {
+    protected abstract void saveElement(Resume r, int index);
+
+    public Resume get(String uuid) {
         int index = resumeAvailabilityCheck(uuid);
-        if(index == -1){
+        if(index < 0){
             System.out.println("Resume not found");
             return  null;
         }
         return storage[index];
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         int index = resumeAvailabilityCheck(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Resume not found");
         }
         else {
@@ -71,11 +71,11 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 }
