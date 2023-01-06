@@ -18,8 +18,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
 
     protected void saveElement(Resume r, int index){
-        index = Math.abs(index + 1);
-        if(size() - index - 1 >= 0) System.arraycopy(storage, index, storage, index + 1, size() - index);
+        index = - index - 1;
+        System.arraycopy(storage, index, storage, index + 1, size() - index);
         storage[index] = r;
     }
 
