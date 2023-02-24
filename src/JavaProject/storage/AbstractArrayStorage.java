@@ -1,5 +1,8 @@
 package JavaProject.storage;
 
+import JavaProject.exception.ExistStorageException;
+import JavaProject.exception.NotExistStorageException;
+import JavaProject.exception.StorageException;
 import JavaProject.model.Resume;
 
 import java.util.Arrays;
@@ -23,7 +26,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume r) {
         int index = resumeAvailabilityCheck(r.toString());
         if(index < 0){
-            System.out.println("Resume not found");
+            throw new NotExistStorageException(r.toString());
         }
         else{
             storage[index] = r;
@@ -33,10 +36,10 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         int index = resumeAvailabilityCheck(r.toString());
         if(index >= 0){
-            System.out.println("Resume " + r.toString() + " already exist!");
+            throw new ExistStorageException(r.toString());
             }
         else if (storage.length == size()) {
-            System.out.println("Resume storage is full!!!");
+            throw new StorageException("Resume storage is full!!!", r.toString());
         }
         else{
             saveElement(r, index);
@@ -49,8 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = resumeAvailabilityCheck(uuid);
         if(index < 0){
-            System.out.println("Resume not found");
-            return  null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -58,7 +60,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = resumeAvailabilityCheck(uuid);
         if (index < 0) {
-            System.out.println("Resume not found");
+            throw new NotExistStorageException(uuid);
         }
         else {
             storage[index] = null;

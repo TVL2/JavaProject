@@ -1,5 +1,4 @@
 import JavaProject.model.Resume;
-import JavaProject.storage.ArrayStorage;
 import JavaProject.storage.SortedArrayStorage;
 
 /**
@@ -10,18 +9,18 @@ public class MainTestArrayStorage {
     static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        final Resume r1 = new Resume();
-        r1.setUuid("uuid1");
-        final Resume r2 = new Resume();
-        r2.setUuid("uuid2");
-        final Resume r3 = new Resume();
-        r3.setUuid("uuid3");
-        final Resume r6 = new Resume();
-        r6.setUuid("uuid6");
-        final Resume r5 = new Resume();
-        r5.setUuid("uuid5");
-        final Resume r4 = new Resume();
-        r4.setUuid("uuid4");
+        final Resume r1 = new Resume("uuid1");
+
+        final Resume r2 = new Resume("uuid2");
+
+        final Resume r3 = new Resume("uuid3");
+
+        final Resume r6 = new Resume("uuid6");
+
+        final Resume r5 = new Resume("uuid5");
+
+        final Resume r4 = new Resume("uuid4");
+
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);

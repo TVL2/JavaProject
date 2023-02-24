@@ -24,3 +24,7 @@
 - добавить методы equals,hashcode, setUuid в класс JavaProject.model.Resume
 - создать интерфейс Storage;
 - создать классы AbstractArrayStorage, SortedArrayStorage.
+
+### Задание 3
+- добавить exeptions
+- добавить юнит-тесты
