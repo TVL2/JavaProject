@@ -25,6 +25,6 @@
 - создать интерфейс Storage;
 - создать классы AbstractArrayStorage, SortedArrayStorage.
 
-### Задание 3
+### Задание 4
 - добавить exeptions
 - добавить юнит-тесты
