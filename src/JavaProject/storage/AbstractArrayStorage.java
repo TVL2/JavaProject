@@ -1,7 +1,5 @@
 package JavaProject.storage;
 
-import JavaProject.exception.ExistStorageException;
-import JavaProject.exception.NotExistStorageException;
 import JavaProject.exception.StorageException;
 import JavaProject.model.Resume;
 
@@ -10,65 +8,53 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    protected abstract int resumeAvailabilityCheck(String uuid);
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void update(Resume r) {
-        int index = resumeAvailabilityCheck(r.toString());
-        if(index < 0){
-            throw new NotExistStorageException(r.toString());
-        }
-        else{
-            storage[index] = r;
-        }
+
+    @Override
+    protected abstract Integer getSearchKey(String uuid);
+
+    @Override
+    protected void doUpdate(Resume r, Object searchKey) {
+        storage[(Integer) searchKey] = r;
     }
 
-    public void save(Resume r) {
-        int index = resumeAvailabilityCheck(r.toString());
-        if(index >= 0){
-            throw new ExistStorageException(r.toString());
-            }
-        else if (storage.length == size()) {
+
+    @Override
+    protected void doSave(Resume r, Object index) {
+        if (STORAGE_LIMIT == size()) {
             throw new StorageException("Resume storage is full!!!", r.toString());
-        }
-        else{
-            saveElement(r, index);
+        } else {
+            saveElement(r, (Integer) index);
             size++;
         }
     }
 
-    protected abstract void saveElement(Resume r, int index);
 
-    public Resume get(String uuid) {
-        int index = resumeAvailabilityCheck(uuid);
-        if(index < 0){
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
+    @Override
+    protected void doDelete(Object searchKey) {
+        Integer index = (Integer) searchKey;
+        storage[index] = null;
+        if (this.size() - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, this.size() - 1 - index);
+        storage[this.size() - 1] = null;
+        size--;
     }
 
-    public void delete(String uuid) {
-        int index = resumeAvailabilityCheck(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        else {
-            storage[index] = null;
-            if (this.size() - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, this.size() - 1 - index);
-            storage[this.size() - 1] = null;
-            size--;
-        }
+    @Override
+    protected Resume doGet(Object index) {
+        return storage[(Integer) index];
     }
+
 
     /**
      * @return array, contains only Resumes in storage (without null)
