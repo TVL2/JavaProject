@@ -7,18 +7,18 @@ public class MainCollections {
     private static final Resume RESUME_1;
 
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = new Resume((UUID_2));
+    private static final Resume RESUME_2 = new Resume((UUID_2), "Name2");
 
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = new Resume((UUID_3));
+    private static final Resume RESUME_3 = new Resume((UUID_3), "Name3");
 
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume((UUID_4));
+    private static final Resume RESUME_4 = new Resume((UUID_4), "Name4");
 
     static {
         // для инициализации в случае возможных Exception
         UUID_1 = "uuid1";
-        RESUME_1 = new Resume((UUID_1));
+        RESUME_1 = new Resume((UUID_1), "Name1");
     }
 
     public static void main(String[] args) {
@@ -34,7 +34,7 @@ public class MainCollections {
              collection) {
             System.out.println(r);
             if (Objects.equals(r.toString(), UUID_1)){
-                collection.remove(r);
+                //collection.remove(r);
             }
         }
         Iterator<Resume> iterator = collection.iterator();
@@ -61,5 +61,8 @@ public class MainCollections {
         for (Map.Entry<String, Resume> entry : map.entrySet()) {
             System.out.println(entry.getValue());
         }
+
+        List<Resume> resumes = Arrays.asList(RESUME_3, RESUME_2);
+        //resumes.remove(1);
     }
 }

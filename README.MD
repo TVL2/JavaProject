@@ -32,3 +32,9 @@
 ### Задание 5
  - Выделить общий класс AbstractStorage и реализовать подкласс ListStorage. 
  - сделать класс для тестирования ListStorage
+
+### Задание 6
+ - метод saveOverflow() должен исполняться только для массивов
+ - в конструктор Resume добавить второй параметр — fullName
+ - во всех реализациях Storage заменить метод Resume[] getAll() на List<Resume> getAllSorted()
+ - Реализовать MapUuidStorage
